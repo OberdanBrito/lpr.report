@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="lpr1" uuid="620c030b-ae59-4f2f-b73e-3a42ab56b4de">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.0.0.102:5432/slpr</jdbc-url>
+      <time-zone>America/Sao_Paulo</time-zone>
+    </data-source>
+    <data-source source="LOCAL" name="anima_remoto" uuid="7c593e80-f1ab-4008-b3c8-d1cd0463c75a">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/smt</jdbc-url>
+      <time-zone>America/Sao_Paulo</time-zone>
+    </data-source>
+  </component>
+</project>
