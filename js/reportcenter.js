@@ -2,6 +2,8 @@ class Reportcenter {
 
     constructor(cell) {
 
+        let thisreport = this;
+
         let layout = cell.attachLayout({
             pattern: '2U',
             offsets: {
@@ -24,23 +26,26 @@ class Reportcenter {
         });
 
         let Tree = layout.cells('a').attachTreeView({
-            items: [
-                {
-                    id: 1, text: "Informações gerenciais", open: 1, items: [
-                        {
-                            id: 2, text: "Frequência de passagem", userdata: {
-                                name1: "value1", name2: "value2"
-                            }
-                        }
-                    ]
-                }
-            ]
+            items: reports
         });
 
-        Tree.attachEvent("onClick", function(id){
-
+        Tree.attachEvent("onDblClick", function(id){
+            thisreport.MontaLayout(id);
+            return true;
         });
 
+    }
+
+    MontaLayout(id) {
+
+        let info = new Info();
+        info.api = Tree.getUserData(id, "origem");
+        info.Listar({
+            fields:Tree.getUserData(id, "campos"),
+            callback: function (response) {
+                console.debug(response);
+            }
+        });
 
     }
 }
