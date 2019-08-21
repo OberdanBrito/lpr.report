@@ -4,6 +4,8 @@ class Reportcenter {
 
         let that = this;
 
+        this.relatorio =  null;
+
         this.layout = cell.attachLayout({
             pattern: '2U',
             offsets: {
@@ -15,7 +17,9 @@ class Reportcenter {
             cells: [
                 {
                     id: 'a',
-                    header: false,
+                    header: true,
+                    text: 'Estrutura da informação',
+                    collapsed_text: 'Estrutura da informação',
                     width: 250
                 },
                 {
@@ -30,13 +34,14 @@ class Reportcenter {
         });
 
         this.Tree.attachEvent("onDblClick", function (id) {
-            that.Preprocessamento(id);
+            that.relatorio = this.getUserData(id, "info");
+            that.Preprocessamento();
             return true;
         });
 
     }
 
-    Preprocessamento(relatorio) {
+    Preprocessamento() {
 
         let that = this;
 
@@ -58,7 +63,7 @@ class Reportcenter {
 
                 switch (toolbar_id) {
                     case 'procview':
-                        that.Processar(relatorio);
+                        that.PreVisualizar();
                         break;
                     case 'procself':
                         break;
@@ -77,21 +82,112 @@ class Reportcenter {
 
     }
 
-    Processar(relatorio, callback) {
+    Processar(origem, callback) {
 
         let campos = [];
-        this.Tree.getUserData(relatorio, "campos").filter(function (item) {
+        this.relatorio.campos.filter(function (item) {
             campos.push(item.nome);
         });
 
         let info = new Info();
-        info.api = this.Tree.getUserData(relatorio, "origem");
+        info.api = origem;
         info.Listar({
             fields: campos.join(','),
             callback: function (response) {
-                console.debug(response);
+                callback(response);
             }
         });
+
+    }
+
+    PreVisualizar() {
+
+        let that = this;
+
+        this.layout.attachEvent("onContentLoaded", function(){
+
+            let ifr = that.layout.cells('b').getFrame().contentWindow.document;
+            ifr.getElementById("rpt-titulo").textContent = that.relatorio.titulo;
+            ifr.getElementById("rpt-subtitulo").textContent = that.relatorio.subtitulo;
+            ifr.getElementById("rpt-atualizado").textContent = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
+
+            that.relatorio.campos.filter(function (item) {
+
+                if (item.group === true)
+                    return;
+
+                let tdfieldname = document.createElement('td');
+                tdfieldname.textContent = item.label;
+                ifr.getElementById('rpt-fields').appendChild(tdfieldname);
+
+            });
+
+            let totais = {};
+            that.relatorio.campos.filter(function (item) {
+
+                if (item.group === true)
+                    return;
+
+                if (item.totais === true) {
+                    totais[item.nome] = 0;
+                } else {
+                    totais[item.nome] = '-';
+                }
+            });
+
+            that.Processar(that.relatorio.origem,function (response) {
+
+                response.dados.filter(function (linha) {
+                    let tr = document.createElement('tr');
+                    that.relatorio.campos.filter(function (item) {
+
+                        if (item.group === true)
+                            return;
+
+                        let td = document.createElement('td');
+
+                        let value = linha[item.nome];
+                        if (item.format !== undefined)
+                            value = item.format(value);
+
+                        td.textContent = value;
+
+                        if (item.center === true)
+                            td.className = 'center';
+
+                        tr.appendChild(td);
+
+                        if (item.totais === true) {
+                            totais[item.nome] += parseInt(linha[item.nome]);
+                        }
+
+
+
+
+                    });
+                    ifr.getElementById('rpt-data').appendChild(tr);
+                });
+
+
+                let trtotal = document.createElement('tr');
+                trtotal.className = 'rpt-totals row-p';
+
+                for (let elem in totais) {
+
+                    let td = document.createElement('td');
+                    td.textContent = totais[elem];
+                    trtotal.appendChild(td);
+                }
+
+                ifr.getElementById('rpt-totals').appendChild(trtotal);
+                that.layout.cells('b').progressOff();
+
+            });
+
+        });
+
+        this.layout.cells('b').progressOn();
+        this.layout.cells('b').attachURL(this.relatorio.modelo);
 
     }
 }
