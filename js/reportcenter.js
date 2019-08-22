@@ -102,14 +102,44 @@ class Reportcenter {
 
     PreVisualizar() {
 
+        numeral.register('locale', 'pt', {
+            delimiters: {
+                thousands: '.',
+                decimal: ','
+            },
+            abbreviations: {
+                thousand: 'k',
+                million: 'm',
+                billion: 'b',
+                trillion: 't'
+            },
+            ordinal : function (number) {
+                return number === 1 ? 'er' : 'ème';
+            },
+            currency: {
+                symbol: 'R$'
+            }
+        });
+
+        numeral.locale('pt');
+        moment.locale('pt-BR');
+
         let that = this;
 
         this.layout.attachEvent("onContentLoaded", function(){
 
             let ifr = that.layout.cells('b').getFrame().contentWindow.document;
-            ifr.getElementById("rpt-titulo").textContent = that.relatorio.titulo;
-            ifr.getElementById("rpt-subtitulo").textContent = that.relatorio.subtitulo;
-            ifr.getElementById("rpt-atualizado").textContent = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
+
+            let pagina = ifr.getElementById('pagina');
+
+            console.debug(pagina);
+
+            pagina.getElementById("rpt-titulo").textContent = that.relatorio.titulo;
+            pagina.getElementById("rpt-subtitulo").textContent = that.relatorio.subtitulo;
+            pagina.getElementById("rpt-atualizado").textContent = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
+            pagina.getElementById("rpt-responsavel").textContent = 'oberdan';
+            pagina.getElementById("rpt-cliente").textContent = 'Craos.NET Serviços de Digitalização LTDA';
+            pagina.getElementById("rpt-ponto").textContent = 'Portaria 1';
 
             that.relatorio.campos.filter(function (item) {
 
@@ -118,23 +148,23 @@ class Reportcenter {
 
                 let tdfieldname = document.createElement('td');
                 tdfieldname.textContent = item.label;
-                ifr.getElementById('rpt-fields').appendChild(tdfieldname);
+                pagina.getElementById('rpt-fields').appendChild(tdfieldname);
 
             });
 
-            let totais = {};
+            let totais = {}, avgs = {};
             that.relatorio.campos.filter(function (item) {
 
                 if (item.group === true)
                     return;
 
-                if (item.totais === true) {
+                totais[item.nome] = '-';
+                if (item.totais === true)
                     totais[item.nome] = 0;
-                } else {
-                    totais[item.nome] = '-';
-                }
-            });
 
+                avgs[item.nome] = [];
+
+            });
             that.Processar(that.relatorio.origem,function (response) {
 
                 response.dados.filter(function (linha) {
@@ -147,8 +177,17 @@ class Reportcenter {
                         let td = document.createElement('td');
 
                         let value = linha[item.nome];
-                        if (item.format !== undefined)
-                            value = item.format(value);
+
+                        if (item.format !== undefined) {
+                            if (item.type === 'number') {
+                                value = numeral(value).format(item.format);
+                            } else if (item.type === 'date') {
+                                value = moment(value).format(item.format);
+                            }
+                        }
+
+                        if (item.truncate === true)
+                            value = Math.trunc(value);
 
                         td.textContent = value;
 
@@ -157,36 +196,64 @@ class Reportcenter {
 
                         tr.appendChild(td);
 
-                        if (item.totais === true) {
+                        if (item.totais === true)
                             totais[item.nome] += parseInt(linha[item.nome]);
-                        }
 
-
-
+                        if (item.avgs === true)
+                            avgs[item.nome].push(parseInt(linha[item.nome]));
 
                     });
-                    ifr.getElementById('rpt-data').appendChild(tr);
-                });
 
+                    pagina.getElementById('rpt-data').appendChild(tr);
+                });
 
                 let trtotal = document.createElement('tr');
                 trtotal.className = 'rpt-totals row-p';
 
-                for (let elem in totais) {
+                let travg = document.createElement('tr');
+                travg.className = 'rpt-avgs row-p';
 
+                for (let elem in totais) {
                     let td = document.createElement('td');
-                    td.textContent = totais[elem];
+
+                    let value = numeral(totais[elem]).format('0,');
+                    if (that.relatorio.campos.find(x=>x.nome === elem).detail === true)
+                        value = '';
+
+                    td.textContent = value;
                     trtotal.appendChild(td);
                 }
 
-                ifr.getElementById('rpt-totals').appendChild(trtotal);
+                for (let elem in avgs) {
+                    let td = document.createElement('td');
+
+
+                    let avg;
+                    if (avgs[elem].length > 0) {
+                        let sum = avgs[elem].reduce((previous, current) => current += previous);
+                        avg = Math.trunc(sum / avgs[elem].length);
+                    } else {
+                        avg = '';
+                    }
+
+                    td.textContent = avg;
+                    travg.appendChild(td);
+
+                }
+
+                pagina.getElementById('rpt-totals').appendChild(trtotal);
+                pagina.getElementById('rpt-totals').appendChild(travg);
                 that.layout.cells('b').progressOff();
 
             });
 
+            let clone = pagina.cloneNode(true);
+            console.debug(clone);
+            ifr.body.appendChild(clone);
+
         });
 
-        this.layout.cells('b').progressOn();
+        //this.layout.cells('b').progressOn();
         this.layout.cells('b').attachURL(this.relatorio.modelo);
 
     }

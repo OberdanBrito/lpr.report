@@ -134,7 +134,8 @@
     </style>
 </head>
 <body>
-    <table id="table-body">
+    <template id="pagina">
+        <table id="table-body">
         <thead>
             <tr>
                 <td>
@@ -157,7 +158,7 @@
                            <td class="cell-lstupt-f">Atualizado em:</td>
                            <td id="rpt-atualizado" class="cell-lstupt"></td>
                            <td class="cell-lstupt-f">Responsável:</td>
-                           <td>Oberdan</td>
+                           <td id="rpt-responsavel"></td>
                            <td class="cell-lstupt-f">Páginas:</td>
                            <td>1 de 5</td>
                    </table>
@@ -168,7 +169,7 @@
                     <table class="rpt-group">
                         <tr class="row-p">
                             <td class="cell-group-f">Cliente:</td>
-                            <td class="cell-group-v">Craos.NET Serviços de Digitalização LTDA</td>
+                            <td id="rpt-cliente" class="cell-group-v"></td>
                         </tr>
                     </table>
                 </td>
@@ -178,7 +179,7 @@
                     <table class="rpt-group">
                         <tr class="row-p">
                             <td class="cell-group-f">Ponto:</td>
-                            <td class="cell-group-v">Portaria 1</td>
+                            <td id="rpt-ponto" class="cell-group-v"></td>
                         </tr>
                     </table>
                 </td>
@@ -233,5 +234,6 @@
             </tr>
         </tfoot>
     </table>
+    </template>
 </body>
 </html>
