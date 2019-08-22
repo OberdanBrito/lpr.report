@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15bffbc5-73d8-44b4-97ba-5f758643ca44" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slpr.postgresql.sql" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../smart/lib/moment/.editorconfig" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../smart/lib/moment/.gitattributes" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../smart/lib/moment/.github/ISSUE_TEMPLATE/bug_report.md" afterDir="false" />
@@ -779,18 +776,6 @@
       <change afterPath="$PROJECT_DIR$/../smart/lib/numeral/tests/locales/uk-ua.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../smart/lib/numeral/tests/locales/vi.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../smart/lib/numeral/tests/numeral.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lpr.agent/slpr/dump.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../lpr.agent/slpr/dump.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lpr.agent/slpr/slpr.postgresql.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../lpr.agent/slpr/slpr.postgresql.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/lpr.report.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/lpr.report.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/modelos/analiticos/tabela.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/modelos/analiticos/tabela.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/reportcenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/reportcenter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/reports.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/reports.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../smart/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../smart/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../smart/modulos/slpr/diario_captura_analitico/diario_captura_analitico.php" beforeDir="false" afterPath="$PROJECT_DIR$/../smart/modulos/slpr/diario_captura_analitico/diario_captura_analitico.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../smart/modulos/slpr_error.log" beforeDir="false" afterPath="$PROJECT_DIR$/../smart/modulos/slpr_error.log" afterDir="false" />
@@ -979,7 +964,7 @@
       <option name="presentableId" value="Default" />
       <updated>1566394836435</updated>
       <workItem from="1566394837859" duration="10178000" />
-      <workItem from="1566426719131" duration="9097000" />
+      <workItem from="1566426719131" duration="9367000" />
     </task>
     <task id="LOCAL-00001" summary="Atualização DDL SLPR">
       <created>1566476716433</created>
@@ -988,7 +973,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566476716433</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Esquema de template">
+      <created>1566476858814</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1566476858814</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1010,6 +1002,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Atualização DDL SLPR" />
-    <option name="LAST_COMMIT_MESSAGE" value="Atualização DDL SLPR" />
+    <MESSAGE value="Esquema de template" />
+    <option name="LAST_COMMIT_MESSAGE" value="Esquema de template" />
   </component>
 </project>
