@@ -5,7 +5,7 @@
 -- Dumped from database version 10.9
 -- Dumped by pg_dump version 10.9
 
--- Started on 2019-08-22 09:21:42 -03
+-- Started on 2019-08-29 20:57:10 -03
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,7 +19,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 2251 (class 1262 OID 16384)
+-- TOC entry 2252 (class 1262 OID 16384)
 -- Name: slpr; Type: DATABASE; Schema: -; Owner: postgres
 --
 
@@ -70,13 +70,67 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2253 (class 0 OID 0)
+-- TOC entry 2254 (class 0 OID 0)
 -- Dependencies: 1
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
+
+--
+-- TOC entry 229 (class 1255 OID 17871)
+-- Name: plate_replace(character varying); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.plate_replace(placa character varying) RETURNS character varying
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    retorno VARCHAR(7);
+BEGIN
+
+    retorno := '';
+    FOR I IN 1 .. 7 LOOP
+
+        IF (I <= 3) THEN
+            IF (substr(placa, I, 1) IN ('0')) THEN
+                retorno = retorno || 'O';
+            ELSEIF (substr(placa, I, 1) IN ('1')) THEN
+                retorno = retorno || 'I';
+            ELSEIF (substr(placa, I, 1) IN ('8','3')) THEN
+                retorno = retorno || 'B';
+            ELSEIF (substr(placa, I, 1) IN ('2')) THEN
+                retorno = retorno || 'Z';
+            ELSE
+                retorno = retorno || substr(placa, I, 1);
+            END IF;
+        ELSE
+            IF (substr(placa, I, 1) IN ('D', 'O', 'Q')) THEN
+                retorno = retorno || '0';
+            ELSEIF (substr(placa, I, 1) IN ('I', 'L')) THEN
+                retorno = retorno || '1';
+            ELSEIF (substr(placa, I, 1) IN ('Z')) THEN
+                retorno = retorno || '2';
+            ELSEIF (substr(placa, I, 1) IN ('B')) THEN
+                retorno = retorno || '8';
+            ELSEIF (substr(placa, I, 1) IN ('S')) THEN
+                retorno = retorno || '5';
+            ELSEIF (substr(placa, I, 1) IN ('G')) THEN
+                retorno = retorno || '6';
+            ELSE
+                retorno = retorno || substr(placa, I, 1);
+            END IF;
+        END IF;
+
+    END LOOP;
+    RAISE NOTICE '% %',placa, retorno;
+    RETURN retorno;
+END
+$$;
+
+
+ALTER FUNCTION public.plate_replace(placa character varying) OWNER TO postgres;
 
 --
 -- TOC entry 216 (class 1255 OID 16506)
@@ -210,7 +264,7 @@ CREATE SEQUENCE cliente.coletor_id_seq
 ALTER TABLE cliente.coletor_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2254 (class 0 OID 0)
+-- TOC entry 2255 (class 0 OID 0)
 -- Dependencies: 199
 -- Name: coletor_id_seq; Type: SEQUENCE OWNED BY; Schema: cliente; Owner: postgres
 --
@@ -248,7 +302,7 @@ CREATE SEQUENCE cliente.info_id_seq
 ALTER TABLE cliente.info_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2255 (class 0 OID 0)
+-- TOC entry 2256 (class 0 OID 0)
 -- Dependencies: 201
 -- Name: info_id_seq; Type: SEQUENCE OWNED BY; Schema: cliente; Owner: postgres
 --
@@ -287,7 +341,7 @@ CREATE SEQUENCE cliente.site_id_seq
 ALTER TABLE cliente.site_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2256 (class 0 OID 0)
+-- TOC entry 2257 (class 0 OID 0)
 -- Dependencies: 203
 -- Name: site_id_seq; Type: SEQUENCE OWNED BY; Schema: cliente; Owner: postgres
 --
@@ -327,7 +381,7 @@ CREATE SEQUENCE public.candidates_id_seq
 ALTER TABLE public.candidates_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2257 (class 0 OID 0)
+-- TOC entry 2258 (class 0 OID 0)
 -- Dependencies: 205
 -- Name: candidates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -366,7 +420,7 @@ CREATE SEQUENCE public.coordinates_id_seq
 ALTER TABLE public.coordinates_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2258 (class 0 OID 0)
+-- TOC entry 2259 (class 0 OID 0)
 -- Dependencies: 207
 -- Name: coordinates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -413,7 +467,7 @@ CREATE SEQUENCE public.job_id_seq
 ALTER TABLE public.job_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2259 (class 0 OID 0)
+-- TOC entry 2260 (class 0 OID 0)
 -- Dependencies: 209
 -- Name: job_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -494,7 +548,7 @@ CREATE SEQUENCE public.regions_id_seq
 ALTER TABLE public.regions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2260 (class 0 OID 0)
+-- TOC entry 2261 (class 0 OID 0)
 -- Dependencies: 213
 -- Name: regions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -518,7 +572,7 @@ CREATE SEQUENCE public.results_id_seq
 ALTER TABLE public.results_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2261 (class 0 OID 0)
+-- TOC entry 2262 (class 0 OID 0)
 -- Dependencies: 214
 -- Name: results_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -581,7 +635,7 @@ CREATE VIEW report.diario_captura_analitico AS
 ALTER TABLE report.diario_captura_analitico OWNER TO postgres;
 
 --
--- TOC entry 2080 (class 2604 OID 16558)
+-- TOC entry 2081 (class 2604 OID 16558)
 -- Name: coletor id; Type: DEFAULT; Schema: cliente; Owner: postgres
 --
 
@@ -589,7 +643,7 @@ ALTER TABLE ONLY cliente.coletor ALTER COLUMN id SET DEFAULT nextval('cliente.co
 
 
 --
--- TOC entry 2081 (class 2604 OID 16559)
+-- TOC entry 2082 (class 2604 OID 16559)
 -- Name: info id; Type: DEFAULT; Schema: cliente; Owner: postgres
 --
 
@@ -597,7 +651,7 @@ ALTER TABLE ONLY cliente.info ALTER COLUMN id SET DEFAULT nextval('cliente.info_
 
 
 --
--- TOC entry 2082 (class 2604 OID 16560)
+-- TOC entry 2083 (class 2604 OID 16560)
 -- Name: ponto id; Type: DEFAULT; Schema: cliente; Owner: postgres
 --
 
@@ -605,7 +659,7 @@ ALTER TABLE ONLY cliente.ponto ALTER COLUMN id SET DEFAULT nextval('cliente.site
 
 
 --
--- TOC entry 2083 (class 2604 OID 16561)
+-- TOC entry 2084 (class 2604 OID 16561)
 -- Name: candidates id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -613,7 +667,7 @@ ALTER TABLE ONLY public.candidates ALTER COLUMN id SET DEFAULT nextval('public.c
 
 
 --
--- TOC entry 2084 (class 2604 OID 16562)
+-- TOC entry 2085 (class 2604 OID 16562)
 -- Name: coordinates id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -621,7 +675,7 @@ ALTER TABLE ONLY public.coordinates ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
--- TOC entry 2086 (class 2604 OID 16563)
+-- TOC entry 2087 (class 2604 OID 16563)
 -- Name: job id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -629,7 +683,7 @@ ALTER TABLE ONLY public.job ALTER COLUMN id SET DEFAULT nextval('public.job_id_s
 
 
 --
--- TOC entry 2089 (class 2604 OID 16564)
+-- TOC entry 2090 (class 2604 OID 16564)
 -- Name: regions id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -637,7 +691,7 @@ ALTER TABLE ONLY public.regions ALTER COLUMN id SET DEFAULT nextval('public.regi
 
 
 --
--- TOC entry 2088 (class 2604 OID 16565)
+-- TOC entry 2089 (class 2604 OID 16565)
 -- Name: results id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -645,7 +699,7 @@ ALTER TABLE ONLY public.results ALTER COLUMN id SET DEFAULT nextval('public.resu
 
 
 --
--- TOC entry 2093 (class 2606 OID 16567)
+-- TOC entry 2094 (class 2606 OID 16567)
 -- Name: coletor coletor_pk; Type: CONSTRAINT; Schema: cliente; Owner: postgres
 --
 
@@ -654,7 +708,7 @@ ALTER TABLE ONLY cliente.coletor
 
 
 --
--- TOC entry 2097 (class 2606 OID 16569)
+-- TOC entry 2098 (class 2606 OID 16569)
 -- Name: info info_pk; Type: CONSTRAINT; Schema: cliente; Owner: postgres
 --
 
@@ -663,7 +717,7 @@ ALTER TABLE ONLY cliente.info
 
 
 --
--- TOC entry 2101 (class 2606 OID 16571)
+-- TOC entry 2102 (class 2606 OID 16571)
 -- Name: ponto site_pk; Type: CONSTRAINT; Schema: cliente; Owner: postgres
 --
 
@@ -672,7 +726,7 @@ ALTER TABLE ONLY cliente.ponto
 
 
 --
--- TOC entry 2104 (class 2606 OID 16573)
+-- TOC entry 2105 (class 2606 OID 16573)
 -- Name: candidates primary_key_candidates; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -681,7 +735,7 @@ ALTER TABLE ONLY public.candidates
 
 
 --
--- TOC entry 2107 (class 2606 OID 16575)
+-- TOC entry 2108 (class 2606 OID 16575)
 -- Name: coordinates primary_key_coordinates; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -690,7 +744,7 @@ ALTER TABLE ONLY public.coordinates
 
 
 --
--- TOC entry 2110 (class 2606 OID 16577)
+-- TOC entry 2111 (class 2606 OID 16577)
 -- Name: job primary_key_job; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -699,7 +753,7 @@ ALTER TABLE ONLY public.job
 
 
 --
--- TOC entry 2115 (class 2606 OID 16579)
+-- TOC entry 2116 (class 2606 OID 16579)
 -- Name: regions primary_key_regions; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -708,7 +762,7 @@ ALTER TABLE ONLY public.regions
 
 
 --
--- TOC entry 2112 (class 2606 OID 16581)
+-- TOC entry 2113 (class 2606 OID 16581)
 -- Name: results primary_key_results; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -717,7 +771,7 @@ ALTER TABLE ONLY public.results
 
 
 --
--- TOC entry 2090 (class 1259 OID 16582)
+-- TOC entry 2091 (class 1259 OID 16582)
 -- Name: coletor_id_uindex; Type: INDEX; Schema: cliente; Owner: postgres
 --
 
@@ -725,7 +779,7 @@ CREATE UNIQUE INDEX coletor_id_uindex ON cliente.coletor USING btree (id);
 
 
 --
--- TOC entry 2091 (class 1259 OID 16583)
+-- TOC entry 2092 (class 1259 OID 16583)
 -- Name: coletor_nome_uindex; Type: INDEX; Schema: cliente; Owner: postgres
 --
 
@@ -733,7 +787,7 @@ CREATE UNIQUE INDEX coletor_nome_uindex ON cliente.coletor USING btree (nome);
 
 
 --
--- TOC entry 2094 (class 1259 OID 16584)
+-- TOC entry 2095 (class 1259 OID 16584)
 -- Name: info_id_uindex; Type: INDEX; Schema: cliente; Owner: postgres
 --
 
@@ -741,7 +795,7 @@ CREATE UNIQUE INDEX info_id_uindex ON cliente.info USING btree (id);
 
 
 --
--- TOC entry 2095 (class 1259 OID 16585)
+-- TOC entry 2096 (class 1259 OID 16585)
 -- Name: info_nome_uindex; Type: INDEX; Schema: cliente; Owner: postgres
 --
 
@@ -749,7 +803,7 @@ CREATE UNIQUE INDEX info_nome_uindex ON cliente.info USING btree (nome);
 
 
 --
--- TOC entry 2098 (class 1259 OID 16586)
+-- TOC entry 2099 (class 1259 OID 16586)
 -- Name: site_id_uindex; Type: INDEX; Schema: cliente; Owner: postgres
 --
 
@@ -757,7 +811,7 @@ CREATE UNIQUE INDEX site_id_uindex ON cliente.ponto USING btree (id);
 
 
 --
--- TOC entry 2099 (class 1259 OID 16587)
+-- TOC entry 2100 (class 1259 OID 16587)
 -- Name: site_nome_uindex; Type: INDEX; Schema: cliente; Owner: postgres
 --
 
@@ -765,7 +819,7 @@ CREATE UNIQUE INDEX site_nome_uindex ON cliente.ponto USING btree (nome);
 
 
 --
--- TOC entry 2102 (class 1259 OID 16588)
+-- TOC entry 2103 (class 1259 OID 16588)
 -- Name: candidates_id_uindex; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -773,7 +827,7 @@ CREATE UNIQUE INDEX candidates_id_uindex ON public.candidates USING btree (id);
 
 
 --
--- TOC entry 2105 (class 1259 OID 16589)
+-- TOC entry 2106 (class 1259 OID 16589)
 -- Name: coordinates_id_uindex; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -781,7 +835,7 @@ CREATE UNIQUE INDEX coordinates_id_uindex ON public.coordinates USING btree (id)
 
 
 --
--- TOC entry 2108 (class 1259 OID 16590)
+-- TOC entry 2109 (class 1259 OID 16590)
 -- Name: job_id_uindex; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -789,7 +843,7 @@ CREATE UNIQUE INDEX job_id_uindex ON public.job USING btree (id);
 
 
 --
--- TOC entry 2116 (class 1259 OID 16591)
+-- TOC entry 2117 (class 1259 OID 16591)
 -- Name: regions_id_uindex; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -797,7 +851,7 @@ CREATE UNIQUE INDEX regions_id_uindex ON public.regions USING btree (id);
 
 
 --
--- TOC entry 2113 (class 1259 OID 16592)
+-- TOC entry 2114 (class 1259 OID 16592)
 -- Name: results_id_uindex; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -805,7 +859,7 @@ CREATE UNIQUE INDEX results_id_uindex ON public.results USING btree (id);
 
 
 --
--- TOC entry 2117 (class 2606 OID 16593)
+-- TOC entry 2118 (class 2606 OID 16593)
 -- Name: coletor coletor_ponto_fk; Type: FK CONSTRAINT; Schema: cliente; Owner: postgres
 --
 
@@ -814,7 +868,7 @@ ALTER TABLE ONLY cliente.coletor
 
 
 --
--- TOC entry 2118 (class 2606 OID 16598)
+-- TOC entry 2119 (class 2606 OID 16598)
 -- Name: ponto site_info_fk; Type: FK CONSTRAINT; Schema: cliente; Owner: postgres
 --
 
@@ -823,7 +877,7 @@ ALTER TABLE ONLY cliente.ponto
 
 
 --
--- TOC entry 2119 (class 2606 OID 16603)
+-- TOC entry 2120 (class 2606 OID 16603)
 -- Name: candidates candidates_results_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -832,7 +886,7 @@ ALTER TABLE ONLY public.candidates
 
 
 --
--- TOC entry 2120 (class 2606 OID 16608)
+-- TOC entry 2121 (class 2606 OID 16608)
 -- Name: coordinates coordinates_results_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -841,7 +895,7 @@ ALTER TABLE ONLY public.coordinates
 
 
 --
--- TOC entry 2122 (class 2606 OID 16613)
+-- TOC entry 2123 (class 2606 OID 16613)
 -- Name: regions regions_job_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -850,7 +904,7 @@ ALTER TABLE ONLY public.regions
 
 
 --
--- TOC entry 2121 (class 2606 OID 16618)
+-- TOC entry 2122 (class 2606 OID 16618)
 -- Name: results results_job_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -858,7 +912,7 @@ ALTER TABLE ONLY public.results
     ADD CONSTRAINT results_job_fkey FOREIGN KEY (job) REFERENCES public.job(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
--- Completed on 2019-08-22 09:21:48 -03
+-- Completed on 2019-08-29 20:57:14 -03
 
 --
 -- PostgreSQL database dump complete
