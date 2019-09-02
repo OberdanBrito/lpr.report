@@ -1,5 +1,25 @@
 dhtmlxEvent(window, "load", function () {
 
+    numeral.register('locale', 'pt', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
+        },
+        currency: {
+            symbol: 'R$'
+        }
+    });
+
+    numeral.locale('pt');
+    moment.locale('pt-BR');
+
+
     let layout = new dhtmlXLayoutObject({
         parent: document.body,
         pattern: '1C',
@@ -18,10 +38,9 @@ dhtmlxEvent(window, "load", function () {
         ]
     }), siderBar = layout.cells('a').attachSidebar({
         parent: document.body,
-        template: "icons",
+        template: "details",
         icons_path: "./img/siderbar/",
         single_cell: false,
-        width: 50,
         header: true,
         items: [
             {
@@ -29,6 +48,18 @@ dhtmlxEvent(window, "load", function () {
                 text: "Dashboard",
                 icon: "dashboard.svg",
                 selected: false
+            },
+            {
+                id: "parametros",
+                text: "Parametrizações",
+                icon: "reportcenter.svg",
+                selected: true
+            },
+            {
+                id: "listas",
+                text: "Listas",
+                icon: "reportcenter.svg",
+                selected: true
             },
             {
                 id: "reportcenter",

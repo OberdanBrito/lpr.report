@@ -3,8 +3,8 @@ class Reportcenter {
     constructor(cell) {
 
         let that = this;
-
-        this.relatorio =  null;
+        this.modelo = null;
+        this.relatorio = null;
 
         this.layout = cell.attachLayout({
             pattern: '2U',
@@ -47,17 +47,19 @@ class Reportcenter {
 
         this.layout.cells('b').attachToolbar({
             icon_path: "./img/report/toolbar/",
-            items:[
-                {type: "buttonSelect", id: "processar", text: "Processar", img: "processar.svg", options:[
-                    {id: "procview", type: "obj", text: "Pré-visualizar", img: "visualizar.svg"},
-                    {id: "procself", type: "obj", text: "Exibir em outra aba", img: "visualizar.svg"}
-                ]},
+            items: [
+                {
+                    type: "buttonSelect", id: "processar", text: "Processar", img: "processar.svg", options: [
+                        {id: "procview", type: "obj", text: "Pré-visualizar", img: "visualizar.svg"},
+                        {id: "procself", type: "obj", text: "Exibir em outra aba", img: "visualizar.svg"}
+                    ]
+                },
                 {type: "separator", id: "sep1"},
-                {type: "button", id: "pdf", text:"Exportar PDF", img: "pdf.svg"},
-                {type: "button", id: "xls", text:"Exportar Excel", img: "excel.svg"},
-                {type: "button", id: "email", text:"Enviar por e-mail", img: "email.svg"},
+                {type: "button", id: "pdf", text: "Exportar PDF", img: "pdf.svg"},
+                {type: "button", id: "xls", text: "Exportar Excel", img: "excel.svg"},
+                {type: "button", id: "email", text: "Enviar por e-mail", img: "email.svg"},
                 {type: "separator", id: "sep1"},
-                {type: "button", id: "print", text:"Imprimir", img: "imprimir.svg"},
+                {type: "button", id: "print", text: "Imprimir", img: "imprimir.svg"},
             ],
             onclick: function (toolbar_id) {
 
@@ -102,44 +104,22 @@ class Reportcenter {
 
     PreVisualizar() {
 
-        numeral.register('locale', 'pt', {
-            delimiters: {
-                thousands: '.',
-                decimal: ','
-            },
-            abbreviations: {
-                thousand: 'k',
-                million: 'm',
-                billion: 'b',
-                trillion: 't'
-            },
-            ordinal : function (number) {
-                return number === 1 ? 'er' : 'ème';
-            },
-            currency: {
-                symbol: 'R$'
-            }
-        });
-
-        numeral.locale('pt');
-        moment.locale('pt-BR');
-
         let that = this;
 
-        this.layout.attachEvent("onContentLoaded", function(){
+        this.layout.attachEvent("onContentLoaded", function () {
 
             let ifr = that.layout.cells('b').getFrame().contentWindow.document;
-
             let pagina = ifr.getElementById('pagina');
 
-            console.debug(pagina);
 
-            pagina.getElementById("rpt-titulo").textContent = that.relatorio.titulo;
-            pagina.getElementById("rpt-subtitulo").textContent = that.relatorio.subtitulo;
-            pagina.getElementById("rpt-atualizado").textContent = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
-            pagina.getElementById("rpt-responsavel").textContent = 'oberdan';
-            pagina.getElementById("rpt-cliente").textContent = 'Craos.NET Serviços de Digitalização LTDA';
-            pagina.getElementById("rpt-ponto").textContent = 'Portaria 1';
+            that.modelo = pagina.content.cloneNode(true);
+            that.modelo.getElementById("rpt-titulo").textContent = that.relatorio.titulo;
+            that.modelo.getElementById("rpt-subtitulo").textContent = that.relatorio.subtitulo;
+            that.modelo.getElementById("rpt-atualizado").textContent = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
+            that.modelo.getElementById("rpt-responsavel").textContent = 'oberdan';
+            that.modelo.getElementById("rpt-cliente").textContent = 'Craos.NET Serviços de Digitalização LTDA';
+            that.modelo.getElementById("rpt-ponto").textContent = 'Portaria 1';
+
 
             that.relatorio.campos.filter(function (item) {
 
@@ -148,7 +128,7 @@ class Reportcenter {
 
                 let tdfieldname = document.createElement('td');
                 tdfieldname.textContent = item.label;
-                pagina.getElementById('rpt-fields').appendChild(tdfieldname);
+                that.modelo.getElementById('rpt-fields').appendChild(tdfieldname);
 
             });
 
@@ -165,7 +145,8 @@ class Reportcenter {
                 avgs[item.nome] = [];
 
             });
-            that.Processar(that.relatorio.origem,function (response) {
+
+            that.Processar(that.relatorio.origem, function (response) {
 
                 response.dados.filter(function (linha) {
                     let tr = document.createElement('tr');
@@ -203,8 +184,7 @@ class Reportcenter {
                             avgs[item.nome].push(parseInt(linha[item.nome]));
 
                     });
-
-                    pagina.getElementById('rpt-data').appendChild(tr);
+                    that.modelo.ownerDocument.getElementById('rpt-data').appendChild(tr);
                 });
 
                 let trtotal = document.createElement('tr');
@@ -217,7 +197,7 @@ class Reportcenter {
                     let td = document.createElement('td');
 
                     let value = numeral(totais[elem]).format('0,');
-                    if (that.relatorio.campos.find(x=>x.nome === elem).detail === true)
+                    if (that.relatorio.campos.find(x => x.nome === elem).detail === true)
                         value = '';
 
                     td.textContent = value;
@@ -241,20 +221,18 @@ class Reportcenter {
 
                 }
 
-                pagina.getElementById('rpt-totals').appendChild(trtotal);
-                pagina.getElementById('rpt-totals').appendChild(travg);
+                that.modelo.ownerDocument.getElementById('rpt-totals').appendChild(trtotal);
+                that.modelo.ownerDocument.getElementById('rpt-totals').appendChild(travg);
                 that.layout.cells('b').progressOff();
 
             });
 
-            let clone = pagina.cloneNode(true);
-            console.debug(clone);
-            ifr.body.appendChild(clone);
+            ifr.body.appendChild(that.modelo);
 
         });
 
         //this.layout.cells('b').progressOn();
-        this.layout.cells('b').attachURL(this.relatorio.modelo);
+        this.layout.cells('b').attachURL(this.relatorio.modelo, false, null);
 
     }
 }

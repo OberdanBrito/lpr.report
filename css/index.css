@@ -19,3 +19,7 @@ html, body {
 .dhxsidebar_base_material div.dhxsidebar_cont div.dhxsidebar_side div.dhxsidebar_side_items div.dhxsidebar_item.dhxsidebar_item_selected {
     background-color: #3a4a53;
 }
+
+.dhxsidebar_base_material div.dhxsidebar_cont div.dhxsidebar_side div.dhxsidebar_side_items div.dhxsidebar_item {
+    color: #fff;
+}

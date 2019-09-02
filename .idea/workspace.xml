@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="15bffbc5-73d8-44b4-97ba-5f758643ca44" name="Default Changelist" comment="Inclusão das bibliotecas Moment e Numeral">
-      <change beforePath="$PROJECT_DIR$/../lpr.agent/slpr/dump.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../lpr.agent/slpr/dump.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lpr.agent/slpr/slpr.postgresql.sql" beforeDir="false" />
+    <list default="true" id="15bffbc5-73d8-44b4-97ba-5f758643ca44" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/lpr.report.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/lpr.report.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/modelos/analiticos/tabela.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/modelos/analiticos/tabela.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/report/toolbar/email.svg" beforeDir="false" afterPath="$PROJECT_DIR$/img/report/toolbar/email.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/report/toolbar/excel.svg" beforeDir="false" afterPath="$PROJECT_DIR$/img/report/toolbar/excel.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/report/toolbar/imprimir.svg" beforeDir="false" afterPath="$PROJECT_DIR$/img/report/toolbar/imprimir.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/report/toolbar/pdf.svg" beforeDir="false" afterPath="$PROJECT_DIR$/img/report/toolbar/pdf.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/report/toolbar/processar.svg" beforeDir="false" afterPath="$PROJECT_DIR$/img/report/toolbar/processar.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/report/toolbar/visualizar.svg" beforeDir="false" afterPath="$PROJECT_DIR$/img/report/toolbar/visualizar.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/reports.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/reports.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slpr.postgresql.sql" beforeDir="false" afterPath="$PROJECT_DIR$/slpr.postgresql.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/reportcenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/reportcenter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../smart/.idea/smart.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../smart/.idea/smart.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../smart/public/instrucao.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../smart/public/instrucao.sql" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -84,7 +78,7 @@
         <option value="oberdan &lt;oberdan@craos.net&gt;" />
       </list>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../lpr.agent" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
   <component name="ProjectId" id="1PjkLRCkCDxA92h5LPdWBKmLWGO" />
@@ -97,6 +91,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../smart/lib" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.updates" />
   </component>
   <component name="RecentsManager">
@@ -134,21 +129,12 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@736c2317" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@6efcd42c" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@736c2317" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@227d24d9" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2345c844" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2345c844" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@46f4a3a5" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@6efcd42c" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@5ed1d316" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
           </expand>
           <select />
@@ -169,7 +155,8 @@
       <workItem from="1566394837859" duration="10178000" />
       <workItem from="1566426719131" duration="9754000" />
       <workItem from="1566909739235" duration="7897000" />
-      <workItem from="1567122312754" duration="490000" />
+      <workItem from="1567122312754" duration="1439000" />
+      <workItem from="1567425416918" duration="5914000" />
     </task>
     <task id="LOCAL-00001" summary="Atualização DDL SLPR">
       <created>1566476716433</created>
@@ -192,7 +179,21 @@
       <option name="project" value="LOCAL" />
       <updated>1566476998195</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Substituição de caracteres por numeros e inverso">
+      <created>1567123266535</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1567123266536</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Inclusão das bibliotecas Moment e Numeral">
+      <created>1567123325703</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1567123325703</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,6 +216,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Atualização DDL SLPR" />
     <MESSAGE value="Esquema de template" />
+    <MESSAGE value="Substituição de caracteres por numeros e inverso" />
     <MESSAGE value="Inclusão das bibliotecas Moment e Numeral" />
     <option name="LAST_COMMIT_MESSAGE" value="Inclusão das bibliotecas Moment e Numeral" />
   </component>
